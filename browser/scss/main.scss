@@ -21,6 +21,43 @@ body {
   margin: 0 auto;
 }
 
+/* Button styles */
+
+button {
+  font-family: $regular-font-stack;
+  background: $slate-blue;
+  color: $almost-white-mint;
+  border: 0px;
+  padding: 10px;
+  &.important-button {
+    font-size: 18px;
+  }
+}
+
+/* Form styles */
+
+.form-group {
+  font-family: $regular-font-stack;
+  margin-bottom: 20px;
+  label {
+    color: $medium-mint;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  input {
+    background: $medium-mint;
+    color: $dark-background-teal;
+    border: 0;
+    font-size: 28px;
+    // height: 30px;
+    width: 400px;
+    padding: 10px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';

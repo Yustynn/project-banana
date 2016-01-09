@@ -1,0 +1,22 @@
+<div class="row center-xs">
+  <div class="col-xs-6">
+    <div class="box blank">
+      Begin your story below
+      <form>
+
+        <textarea ng-model="content" placeholder="Write story contents here" name="content"></textarea>
+
+        <label>Does the user have to make a choice here? </label>
+        <div>
+          <input id="option" type="radio" name="field" value="true">
+          <label for="option"><span><span></span></span>Yes</label>
+        </div>
+        <div>
+          <input id="option" type="radio" name="field" value="false" checked>
+          <label for="option"><span><span></span></span>No</label>
+        </div>
+        <button ng-click="createNewStep()">Create Step</button>
+      </form>
+    </div>
+  </div>
+</div>

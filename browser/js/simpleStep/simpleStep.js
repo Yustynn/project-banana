@@ -8,7 +8,7 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('SimpleStepCtrl', function($scope, $state, $stateParams, StoryFactory) {
+app.controller('SimpleStepCtrl', function($scope, $rootScope, $state, $stateParams, StoryFactory) {
   $scope.timeInMinutes = 0;
 
   $scope.createNewStep = function() {

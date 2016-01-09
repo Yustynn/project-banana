@@ -25,9 +25,12 @@
     </div>
   </div>
   <div class="col-xs-6 end-xs">
-    <div class="box navbox">
-      <a href="#" class="nav-link">Log in</a>
-      <a href="#" class="nav-link">Register</a>
+    <div class="box navbox" ng-show="!user">
+      <button ui-sref="login" class="btn login-button nav-link">Login</button>
+    </div>
+     <div class="box navbox" ng-show="user">
+      <span>Welcome, {{ user.email }}!</span>
+       <a ng-click="logout()">Logout</a>
     </div>
   </div>
 </div>

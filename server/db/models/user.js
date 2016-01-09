@@ -3,6 +3,9 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 
+// OTHER MODELS
+var Story = require('./story');
+
 var schema = new mongoose.Schema({
   email: {
     type: String
@@ -27,10 +30,12 @@ var schema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true
+    required: true, 
+    unique: true
   },
   storiesWritten: {
-    type: [mongoose.Schema.Types.ObjectId], ref: 'Story'
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Story'
   },
   displayName: {
     type: String,
@@ -47,9 +52,9 @@ var schema = new mongoose.Schema({
   completedStories: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Story'
-  }, 
+  },
   lastStep: {
-    type: mongoose.Schema.Types.ObjectId, 
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Step'
   }
 });
@@ -73,21 +78,28 @@ var encryptPassword = function(plainText, salt) {
 };
 
 schema.pre('save', function(next) {
-
   if (this.isModified('password')) {
     this.salt = this.constructor.generateSalt();
     this.password = this.constructor.encryptPassword(this.password, this.salt);
   }
-
   next();
 
 });
 
+
+// STATICS
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;
 
+// METHODS
 schema.method('correctPassword', function(candidatePassword) {
   return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', schema);
+schema.method.createStory = function(storyData) {
+  storyData.storyAuthor = this._id;
+  return Story.create(storyData);
+}
+
+var Story = mongoose.model('User', schema);
+module.exports = Story; 

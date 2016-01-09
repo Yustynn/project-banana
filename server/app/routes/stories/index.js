@@ -18,7 +18,7 @@ var ensureAuthenticated = function (req, res, next) {
 
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
-  
+  console.log('hit api/stories/create: ', req.body)
   Story.create({
     storyAuthor: req.user._id, 
     storyName: req.body.storyName

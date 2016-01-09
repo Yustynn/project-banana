@@ -1,9 +1,11 @@
+@import 'variables';
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #fdfdfd;
+  background: $dark-background-teal;
 }
 
 @mixin clearfix {

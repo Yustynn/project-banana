@@ -1,6 +1,26 @@
-app.config(function ($stateProvider) {
-    $stateProvider.state('home', {
-        url: '/',
-        templateUrl: 'js/home/home.html'
-    });
+app.config(function($stateProvider) {
+  $stateProvider.state('home', {
+    url: '/',
+    templateUrl: 'js/home/home.html',
+    controller: 'HomeCtrl'
+  });
+});
+
+
+app.controller('HomeCtrl', function($scope, $state, StoryFactory, $rootScope) {
+  $scope.createNewStory = function() {
+    StoryFactory.createNewStory($scope.title)
+      .then(function(responseData) {
+        $rootScope.isFirstStep = true;
+        $state.go('simpleStep', {
+          stepId: responseData.stepId,
+          storyId: responseData.storyId
+        });
+      })
+      .then(null, function(err) {
+        console.error(err)
+      })
+      //new story => creates default headnode =>give back id for head node
+  }
+
 });

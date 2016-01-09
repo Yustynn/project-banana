@@ -1,9 +1,13 @@
 navbar {
 
   display: block;
-  background: white;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
+  background: none;
+
+  #logo {
+    font-family: $header-font-stack;
+    color: $almost-white-mint;
+    size: 24px;
+  }
 
   .container {
     width: 91%;
@@ -20,6 +24,16 @@ navbar {
   a {
     color: black;
     font-size: 16px;
+    &.nav-link {
+      size: 16px;
+      color: $medium-mint;
+      font-family: $regular-font-stack;
+      margin-left: 15px;
+    }
+  }
+
+  .navbox {
+    margin-top: 20px;
   }
 
   .nav > li > a {

@@ -4,6 +4,7 @@
   background: $almost-white-mint;
   font-family: $header-font-stack;
   font-size: 30px;
+  padding: 25px;
   margin-bottom: 30px;
   -webkit-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.75);
@@ -12,6 +13,7 @@
   &.alt {
     background: $bright-medium-green;
     font-size: 24px;
+    width: 70%;
     &::before{
       width:5px;
       background: white;

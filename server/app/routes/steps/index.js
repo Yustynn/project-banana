@@ -24,7 +24,7 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
     text: req.body.text, 
     prevStep: req.body.prevStep, 
     time: time, 
-    storyId: req.body.storyId
+    story: req.body.storyId
   })
   .then(function(step) {
     return step.linkFromPrev();
@@ -32,7 +32,7 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
   .then(function(step){
     res.status(200).send({ 
       stepId: step._id, 
-      storyId: step.story._id
+      storyId: step.story
     }); 
   })
   .then(null, next)

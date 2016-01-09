@@ -101,5 +101,5 @@ schema.method.createStory = function(storyData) {
   return Story.create(storyData);
 }
 
-var Story = mongoose.model('User', schema);
-module.exports = Story; 
+var User = mongoose.model('User', schema);
+module.exports = User; 

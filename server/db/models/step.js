@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var _ = require('lodash');
 
-var stepSchema = {
+var stepSchema = new mongoose.Schema({
   text: {
     type: String,
     required: true
@@ -24,7 +24,23 @@ var stepSchema = {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Story'
   }
+})
+  
+stepSchema.linkFromPrev = function() {
+
+  var _this = this; 
+  var prevId = _this.prevStep; 
+
+  return this.findOne({ _id: prevId })
+  .exec()
+  .then(function(prevStep) {
+    prevStep.nextStep = _this._id; 
+    return prevStep.save() 
+  })
+  .then(function(updatedStep) {
+    return this.findOne({_id: updatedStep.nextStep})
+    .exec()
+  })
 }
 
 mongoose.model('Step', stepSchema);
-

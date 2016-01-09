@@ -27,7 +27,8 @@ var schema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true
+    required: true, 
+    unique: true
   },
   storiesWritten: {
     type: [mongoose.Schema.Types.ObjectId], 

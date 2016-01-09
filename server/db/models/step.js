@@ -43,4 +43,6 @@ stepSchema.linkFromPrev = function() {
   })
 }
 
-mongoose.model('Step', stepSchema);
+var Step = mongoose.model('Step', stepSchema);
+
+module.exports = Step; 

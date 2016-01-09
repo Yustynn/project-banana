@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var Step = mongoose.model('Step'); 
+var User = require('./user');
+var Step = require('./step');
 
 var storySchema = new mongoose.Schema({
 
@@ -10,29 +10,34 @@ var storySchema = new mongoose.Schema({
     required: true
   },
   startStep: {
-    type: mongoose.Schema.Types.ObjectId, 
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Step'
-  }, 
+  },
   storyAuthor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true, 
-  }, 
+    required: true,
+  },
   published: {
-    type: Boolean, 
+    type: Boolean,
     default: false
   }
 
 })
 
-storySchema.methods.createHeadStep = function() {
+storySchema.method.createHeadStep = function(text) {
   return Step.create({
-    text: 'DEFAULT_HEADER', 
-    prevStep: null, 
-    story: this._id 
+    text: text || 'DEFAULT_HEADER',
+    prevStep: null,
+    story: this._id
   })
 }
-  
 
-mongoose.model('Story', storySchema); 
+storySchema.method.createStep = function(stepData) {
+    stepData.story = this._id;
+    return Step.create(stepData);
+}
 
+var Story = mongoose.model('Story', storySchema);
+
+module.exports = Story; 

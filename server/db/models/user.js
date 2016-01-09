@@ -30,7 +30,8 @@ var schema = new mongoose.Schema({
     required: true
   },
   storiesWritten: {
-    type: [mongoose.Schema.Types.ObjectId], ref: 'Story'
+    type: [mongoose.Schema.Types.ObjectId], 
+    ref: 'Story'
   },
   displayName: {
     type: String,

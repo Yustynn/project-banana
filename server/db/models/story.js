@@ -1,7 +1,8 @@
 'use strict';
 var mongoose = require('mongoose');
-var Story = require('./story'); 
-var User = require('./user');
+var Story = mongoose.model('Story'); 
+var User = mongoose.model('User');
+var Step = mongoose.model('Step'); 
 
 var storySchema = {
   storyName: {
@@ -23,6 +24,15 @@ var storySchema = {
     default: false
   }
 }
+
+storySchema.statics.createHeadStep = function(storyId) {
+  return Step.create({
+    text: 'DEFAULT_HEADER', 
+    prevStep: null, 
+    story: storyId 
+  })
+}
+  
 
 mongoose.model('Story', storySchema); 
 

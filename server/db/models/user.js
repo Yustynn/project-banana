@@ -97,7 +97,7 @@ schema.method('correctPassword', function(candidatePassword) {
 });
 
 schema.method.createStory = function(storyData) {
-  storyData.user = this._id;
+  storyData.storyAuthor = this._id;
   return Story.create(storyData);
 }
 

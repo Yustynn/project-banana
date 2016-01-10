@@ -8,6 +8,10 @@ app.factory('StoryFactory', function($http) {
     createNewStep: function(text, prevStep, storyId, time, choice) {
       return $http.post('/api/steps/create', {text: text, prevStep: prevStep, storyId: storyId, time: time, choice: choice})
         .then(extractData);
+    },
+    goToPrevStep: function(storyId, stepId) {
+      return $http.get('api/stories/:storyId/steps/:stepId')
+        .then(extractData)
     }
   };
 })

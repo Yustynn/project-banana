@@ -30,7 +30,7 @@ var schema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true, 
+    required: true,
     unique: true
   },
   storiesWritten: {
@@ -96,10 +96,10 @@ schema.method('correctPassword', function(candidatePassword) {
   return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-schema.method.createStory = function(storyData) {
+schema.methods.createStory = function(storyData) {
   storyData.storyAuthor = this._id;
   return Story.create(storyData);
 }
 
 var User = mongoose.model('User', schema);
-module.exports = User; 
+module.exports = User;

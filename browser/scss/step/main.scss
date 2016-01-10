@@ -13,3 +13,16 @@ p.option-number {
   margin-top: 0;
   margin-bottom: 15px;
 }
+
+.option-box .form-group textarea {
+  width: 100%;
+}
+
+span.bright-note {
+  color: $bright-medium-green;
+}
+
+#timeDelay {
+	font-size: 12px;
+	width:80px;
+}

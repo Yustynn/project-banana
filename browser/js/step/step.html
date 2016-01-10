@@ -9,6 +9,12 @@
         <input class="path-checkbox" type="checkbox" ng-model="pathChoice">
         <label>Yes</label>
         <br/>
+
+        <label>Delay before sending: </label>
+        <input id="timeDelay" type="text" ng-model="timeDelay">
+        <label>minutes</label>
+        <br/>
+
         <button ng-show="!pathChoice" ng-click="createNewStep()">Create Step</button>
       </form>
     </div>
@@ -17,25 +23,30 @@
 
 <div class="row around-xs" ng-show="pathChoice">
   <div class="col-xs-4">
-    <div class="box blank ">
+    <div class="box blank option-box">
       <p class="option-number">Option 1:</p>
       <form class="form-group">
         <textarea ng-model="optionOne"></textarea>
+        <input class="path-checkbox" type="radio" name="next" value="left" ng-model="stepToWorkOnNext">
+        <label>I want to work on this one next</label>
       </form>
     </div>
   </div>
   <div class="col-xs-4">
-    <div class="box blank">
+    <div class="box blank option-box">
       <p class="option-number">Option 2:</p>
       <form class="form-group">
         <textarea ng-model="optionTwo"></textarea>
+        <input class="path-checkbox" type="radio" name="next" value="right" ng-model="stepToWorkOnNext">
+        <label>I want to work on this one next</label>
       </form>
     </div>
   </div>
 </div>
 
-<div class="row end-xs" ng-show="pathChoice">
-  <div class="col-xs-2">
-    <button ng-show="pathChoice" ng-click="createNewStep()">Create Step</button>
+<div class="row center-xs" ng-show="pathChoice">
+  <div class="end-xs col-xs-offset-5 col-xs-5">
+    <span class="bright-note" ng-show="stepToWorkOnNext === 'none'">Choose an option to work on next.</span>
+    <button ng-show="pathChoice" ng-disabled="stepToWorkOnNext === 'none'" ng-click="createNewStep()">Create Step</button>
   </div>
 </div>

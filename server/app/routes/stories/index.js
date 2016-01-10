@@ -41,6 +41,7 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
     return newStory.createHeadStep()
   }, console.error.bind(console))
   .then(function(headStep) {
+    console.log(headStep, "THIS IS THE HEAD STEP")
     res.status(200).send({
       stepId: headStep._id,
       storyId: headStep.story

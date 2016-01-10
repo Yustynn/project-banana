@@ -17,15 +17,18 @@ app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, St
                           {value: false,
                           text: 'no'}];
   $scope.pathChoice = false;
-  $scope.timeInMinutes = 0;
+  $scope.timeDelay = 0;
+  $scope.stepToWorkOnNext = 'none';
 
   $scope.createNewStep = function() {
     if ($scope.optionOne && $scope.optionTwo){
       $scope.content += ' ' + $scope.optionOne.toUpperCase() + ' or ' + $scope.optionTwo.toUpperCase();
     }
-    // Params are.. text, prevStep, storyId, time
-    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, $scope.timeInMinutes)
+
+    // Params are.. text, prevStep, storyId, time, choice
+    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, parseInt($scope.timeDelay), $scope.stepToWorkOnNext)
       .then(function(responseData) {
+        console.log(responseData, "RESPONSE DATA")
         $rootScope.isFirstStep = false;
         $state.go('step', {
           stepId: responseData.stepId,

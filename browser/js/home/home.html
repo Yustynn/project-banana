@@ -3,10 +3,13 @@
     <div class="box blank start-xs clearfix">
       <h2 class="big-message home-message">Create a new story</h2>
       <div class="form-group">
-        <label>What should your story be called?</label><br>
+        <label>What should your story be called? <span class="required">*Required</span></label><br>
         <input ng-model='title'type="text"></input>
+        <br>
+        <label>What's your story about? </label><br>
+        <input ng-model='description'type="text"></input>
       </div>
-      <button class="important-button" ng-click="createNewStory()">Create a new story</button>
+      <button class="important-button" ng-disabled="!title" ng-click="createNewStory()">Create a new story</button>
     </div>
   </div>
 </div>

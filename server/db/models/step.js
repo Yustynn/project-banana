@@ -30,30 +30,22 @@ var stepSchema = new mongoose.Schema({
   }
 })
 
-stepSchema.methods.linkFromPrev = function(index) {
-
-  index = index || 0;
-  console.log('the index is: ', index)
-
-  console.log('TOP', this.prevStep);
+stepSchema.methods.linkFromPrev = function(right = false) {
+  var index = right ? 1 : 0;
+  console.log('TOP', this.prevStep, '\n\n\n');
   var _this = this;
   var prevId = _this.prevStep;
 
-  console.log(_this.constructor.findOne);
 
   return _this.constructor.findById(prevId)
-  .exec()
   .then(function(prevStep) {
-    console.log('found prevStep: ', prevStep);
     prevStep.nextStep[index] = _this._id;
-    if(!prevStep.nextStep[0]) prevStep.nextStep[0] = _this._id;
-    console.log('array: ', prevStep.nextStep)
+    if(!prevStep.nextStep[0]) prevStep.nextStep[0] = _this.prevStep; // hacky
+    prevStep.markModified('nextStep');
     return prevStep.save()
   })
   .then(function(updatedStep) {
-    console.log('updatedStep: ', updatedStep.nextStep)
     return _this.constructor.findOne({_id: updatedStep.nextStep[index]})
-    .exec()
   })
 }
 

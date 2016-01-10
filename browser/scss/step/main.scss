@@ -1,0 +1,15 @@
+@import '../variables';
+
+textarea.step-content {
+  width: 100%;
+}
+
+input.path-checkbox {
+  width: auto;
+}
+
+p.option-number {
+  font-family: $header-font-stack;
+  margin-top: 0;
+  margin-bottom: 15px;
+}

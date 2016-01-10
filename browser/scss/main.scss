@@ -1,5 +1,4 @@
 @import 'variables';
-
 * {
   box-sizing: border-box;
 }
@@ -21,6 +20,54 @@ body {
   margin: 0 auto;
 }
 
+/* Clearfix */
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+
+
+/* Header Styles */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font-stack;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+h2.big-message {
+  color: $medium-mint;
+  font-size: 36px;
+}
+
+
+/* Dotted Line styles */
+
+line {
+  border: none;
+  border-left: 3px dotted $almost-white-mint;
+  background: none;
+  width: 0;
+  .short-line {
+    height: 200px;
+  }
+  .long-line {
+    height: 600px;
+  }
+}
+
+
 /* Button styles */
 
 button {
@@ -40,17 +87,20 @@ line {
   border: 2px dashed $almost-white-mint;
 }
 
+
 /* Form styles */
 
 .form-group {
   font-family: $regular-font-stack;
   margin-bottom: 20px;
+  display: block;
   label {
     color: $medium-mint;
     margin-bottom: 5px;
     font-size: 14px;
   }
-  input {
+  input,
+  textarea {
     background: $medium-mint;
     color: $dark-background-teal;
     border: 0;
@@ -69,3 +119,4 @@ line {
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
+@import 'step/main';

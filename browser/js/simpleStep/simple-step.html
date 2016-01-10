@@ -9,11 +9,11 @@
         <textarea ng-model="content" placeholder="Write story contents here" name="content"></textarea>
         <label>Does the user have to make a choice here? </label>
         <div>
-          <input id="option" type="radio" name="field" value="true" ng-model="pathChoice">
+          <input id="option" ng-model="pathChoice" type="radio" name="field" value="true">
           <label for="option">Yes</label>
         </div>
         <div>
-          <input id="option" type="radio" name="field" value="false" checked ng-model="pathChoice">
+          <input id="option" ng-model="pathChoice" type="radio" name="field" value="false" checked>
           <label for="option">No</label>
         </div>
         <button ng-click="createNewStep()">Create Step</button>

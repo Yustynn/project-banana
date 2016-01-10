@@ -4,7 +4,7 @@ var User = require('./user');
 var Step = require('./step');
 
 var storySchema = new mongoose.Schema({
-
+  descripton: String,
   storyName: {
     type: String,
     required: true
@@ -40,4 +40,4 @@ storySchema.methods.createStep = function(stepData) {
 
 var Story = mongoose.model('Story', storySchema);
 
-module.exports = Story; 
+module.exports = Story;

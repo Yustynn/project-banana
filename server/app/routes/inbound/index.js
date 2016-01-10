@@ -3,7 +3,8 @@ var router = require('express').Router();
 module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
-var User = mongoose.model('User'); 
+var User = mongoose.model('User');
+var Step = mongoose.model('Step'); 
 
 router.post('/', function(req, res){
 	if (req.body.Body !== "1" || req.body.Body !== "2"){

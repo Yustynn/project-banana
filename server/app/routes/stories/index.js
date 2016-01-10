@@ -1,9 +1,9 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose'); 
+var mongoose = require('mongoose');
 var _ = require('lodash');
-var Story = mongoose.model('Story'); 
+var Story = mongoose.model('Story');
 var Step = mongoose.model('Step');
 
 
@@ -30,19 +30,22 @@ router.get('/:story_id', function(req, res){
 })
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
+  console.log(req.body.storyName, req.user._id)
+  console.log('\n\n\nHIT\n\n\n')
   Story.create({
-    storyAuthor: req.user._id, 
+    storyAuthor: req.user._id,
     storyName: req.body.storyName
   })
   .then(function(newStory){
+    console.log(newStory);
     return newStory.createHeadStep()
-  })
+  }, console.error.bind(console))
   .then(function(headStep) {
     res.status(200).send({
-      stepId: headStep._id, 
+      stepId: headStep._id,
       storyId: headStep.story
-    }) 
+    })
   })
-  .then(null, next); 
+  .then(null, next);
 
 })

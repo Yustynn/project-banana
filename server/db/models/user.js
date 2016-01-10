@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
+var twilio = require('twilio')('ACc2ba5d5926dbc98aa72dc1134da53f13', 'd18c90e94b8b5d9c27812be9a109ada4');
 
 // OTHER MODELS
 var Story = require('./story');
@@ -30,7 +31,7 @@ var schema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true, 
+    required: true,
     unique: true
   },
   storiesWritten: {
@@ -64,25 +65,28 @@ schema.methods.sanitize = function() {
   return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
-schema.methods.advanceStep = function(step){
-  twilio.sendMessage({
-    to: this.phone,
-    from: ourPhone,
-    body: step.text
-  })
-  if(step.nextStep.length > 1) {
-    return;
-  }
-  waitPeriod = step.time;
-  this.lastStep = step.nextStep[0]
-  this.save()
-  .then(function(updatedUser){
-    setTimeout(advanceStep(updatedUser.lastStep), waitPeriod)
-  })
-}
+// schema.methods.advanceStep = function(step){
+//   twilio.sendMessage({
+//     to: this.phone,
+//     from: ourPhone,
+//     body: step.text
+//   })
+//
+//
+//   this.lastStep = step.nextStep[0]
+//
+//   if(step.nextStep.length > 1) {
+//     return this.save()
+//   }
+//   waitPeriod = step.time;
+//   this.save()
+//   .then(function(updatedUser){
+//     setTimeout(advanceStep(updatedUser.lastStep), waitPeriod)
+//   })
+// }
 
 schema.methods.handleText = function(input){
-  
+
 }
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations

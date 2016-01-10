@@ -8,20 +8,31 @@
 
 <div class="row center-xs">
   <div class="col-xs-6">
-    <div class="box blank">
-      <h2 class="big-message">Begin your story below</h2>
-      <form class="form-group start-xs">
+    <div class="box blank start-xs">
+      <h2 class="big-message">{{ bigMessage }}</h2>
+      <form class="form-group">
         <textarea class="step-content" ng-model="content" name="content"></textarea>
 
-        <label>Does the user have to make a choice here? </label>
-        <input class="path-checkbox" type="checkbox" ng-model="pathChoice">
-        <label>Yes</label>
-        <br/>
+        <div>
+          <label>Does the user have to make a choice here? </label>
+          <input class="path-checkbox" type="checkbox" ng-model="pathChoice">
+          <label>Yes</label>
+          <br/>
+        </div>
 
-        <label>Delay before sending: </label>
-        <input id="timeDelay" type="text" ng-model="timeDelay">
-        <label>minutes</label>
-        <br/>
+        <div ng-hide="isFirstStep">
+          <label>Delay before sending: </label>
+          <input id="timeDelay" type="text" ng-model="timeDelay">
+          <label>minutes</label>
+          <br/>
+        </div>
+
+        <div ng-hide="isFirstStep">
+          <label>Is this the last step on this path?</label>
+          <input class="path-checkbox" type="checkbox" ng-model="isLastStep">
+          <label>Yes</label>
+          <br/>
+        </div>
 
         <button ng-show="!pathChoice" ng-click="createNewStep()">Create Step</button>
       </form>
@@ -36,7 +47,7 @@
       <form class="form-group">
         <textarea ng-model="optionOne"></textarea>
         <input class="path-checkbox" type="radio" name="next" value="left" ng-model="stepToWorkOnNext">
-        <label>I want to work on this one next</label>
+        <label>I want to work on this path next</label>
       </form>
     </div>
   </div>
@@ -46,7 +57,7 @@
       <form class="form-group">
         <textarea ng-model="optionTwo"></textarea>
         <input class="path-checkbox" type="radio" name="next" value="right" ng-model="stepToWorkOnNext">
-        <label>I want to work on this one next</label>
+        <label>I want to work on this path next</label>
       </form>
     </div>
   </div>
@@ -54,7 +65,7 @@
 
 <div class="row center-xs" ng-show="pathChoice">
   <div class="end-xs col-xs-offset-5 col-xs-5">
-    <span class="bright-note" ng-show="stepToWorkOnNext === 'none'">Choose an option to work on next.</span>
-    <button ng-show="pathChoice" ng-disabled="stepToWorkOnNext === 'none'" ng-click="createNewStep()">Create Step</button>
+    <span class="bright-note" ng-show="!stepToWorkOnNext">Choose an option to work on next.</span>
+    <button ng-show="pathChoice" ng-disabled="!stepToWorkOnNext" ng-click="createNewStep()">Create Step</button>
   </div>
 </div>

@@ -16,6 +16,13 @@ var ensureAuthenticated = function (req, res, next) {
     }
 };
 
+router.get('/:stepId', function(req, res, next) {
+   Step.findById(req.params.stepId).exec()
+   .then(function(step) {
+     res.status(200).send(step); 
+   })
+})
+
 router.post('/create', ensureAuthenticated, function(req, res, next) {
 
   var time = req.body.time || 0;

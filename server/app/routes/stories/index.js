@@ -1,12 +1,10 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'); 
 var _ = require('lodash');
-var Story = mongoose.model('Story');
+var Story = mongoose.model('Story'); 
 var Step = mongoose.model('Step');
-
-
 
 var ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -23,30 +21,37 @@ router.get('/:story_id', function(req, res){
     .then(function(result){
       Step.findOne({ _id: result.nextStep }).exec()
       .then(function(start){
+        console.log(req.user);
+        console.log(start.text);
         req.user.advanceStep(start);
+        res.status(200).send(start);
       })
     })
   })
-})
+});
+
+router.get('/', function(req, res, next){
+  Story.find({}).exec()
+  .then(function(stories){
+    res.status(200).send(stories); 
+  })
+  .then(null, next); 
+});
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
-  console.log(req.body.storyName, req.user._id)
-  console.log('\n\n\nHIT\n\n\n')
   Story.create({
-    storyAuthor: req.user._id,
+    storyAuthor: req.user._id, 
     storyName: req.body.storyName
   })
   .then(function(newStory){
-    console.log(newStory);
     return newStory.createHeadStep()
-  }, console.error.bind(console))
-  .then(function(headStep) {
-    console.log(headStep, "THIS IS THE HEAD STEP")
-    res.status(200).send({
-      stepId: headStep._id,
-      storyId: headStep.story
-    })
   })
-  .then(null, next);
+  .then(function(headStep) {
+    res.status(200).send({
+      stepId: headStep._id, 
+      storyId: headStep.story
+    }) 
+  })
+  .then(null, next); 
 
 })

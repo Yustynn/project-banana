@@ -9,6 +9,12 @@
         <input class="path-checkbox" type="checkbox" ng-model="pathChoice">
         <label>Yes</label>
         <br/>
+
+        <label>Delay before sending: </label>
+        <input id="timeDelay" type="text" ng-model="timeDelay">
+        <label>minutes</label>
+        <br/>
+
         <button ng-show="!pathChoice" ng-click="createNewStep()">Create Step</button>
       </form>
     </div>

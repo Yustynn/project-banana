@@ -25,7 +25,7 @@ var storySchema = new mongoose.Schema({
 
 })
 
-storySchema.method.createHeadStep = function(text) {
+storySchema.methods.createHeadStep = function(text) {
   return Step.create({
     text: text || 'DEFAULT_HEADER',
     prevStep: null,
@@ -33,7 +33,7 @@ storySchema.method.createHeadStep = function(text) {
   })
 }
 
-storySchema.method.createStep = function(stepData) {
+storySchema.methods.createStep = function(stepData) {
     stepData.story = this._id;
     return Step.create(stepData);
 }

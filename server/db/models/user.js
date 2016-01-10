@@ -123,10 +123,10 @@ schema.method('correctPassword', function(candidatePassword) {
   return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-schema.method.createStory = function(storyData) {
+schema.methods.createStory = function(storyData) {
   storyData.storyAuthor = this._id;
   return Story.create(storyData);
 }
 
-var Story = mongoose.model('User', schema);
-module.exports = Story; 
+var User = mongoose.model('User', schema);
+module.exports = User;

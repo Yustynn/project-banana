@@ -30,7 +30,6 @@ router.get('/:story_id', function(req, res){
 })
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
-  
   Story.create({
     storyAuthor: req.user._id, 
     storyName: req.body.storyName
@@ -39,7 +38,10 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
     return newStory.createHeadStep()
   })
   .then(function(headStep) {
-    res.status(200).send(headStep._id); 
+    res.status(200).send({
+      stepId: headStep._id, 
+      storyId: headStep.story
+    }) 
   })
   .then(null, next); 
 

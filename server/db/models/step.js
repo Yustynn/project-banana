@@ -27,19 +27,19 @@ var stepSchema = new mongoose.Schema({
   }
 })
   
-stepSchema.linkFromPrev = function() {
+stepSchema.methods.linkFromPrev = function() {
 
   var _this = this; 
   var prevId = _this.prevStep; 
 
-  return this.findOne({ _id: prevId })
+  return _this.constructor.findOne({ _id: prevId })
   .exec()
   .then(function(prevStep) {
     prevStep.nextStep = _this._id; 
     return prevStep.save() 
   })
   .then(function(updatedStep) {
-    return this.findOne({_id: updatedStep.nextStep})
+    return _this.constructor.findOne({_id: updatedStep.nextStep})
     .exec()
   })
 }

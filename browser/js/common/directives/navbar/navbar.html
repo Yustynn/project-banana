@@ -1,17 +1,36 @@
-<nav class="navbar navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
-        </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
-        </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
+<!-- <nav class="navbar navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <fullstack-logo></fullstack-logo>
     </div>
+    <ul class="nav navbar-nav">
+      <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+        <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
+      </li>
+    </ul>
+    <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
+    <div ng-show="user" class="welcome">
+      <span>Welcome, {{ user.email }}!</span>
+      <a ng-click="logout()">Logout</a>
+    </div>
+  </div>
 </nav>
+ -->
+
+
+<div class="row around-xs">
+  <div class="col-xs-4">
+    <div class="box">
+      <h1 id="logo">Story</h1>
+    </div>
+  </div>
+  <div class="col-xs-6 end-xs">
+    <div class="box navbox" ng-show="!user">
+      <button ui-sref="login" class="nav-link" id="login-button">Login</button>
+    </div>
+     <div class="box navbox" ng-show="user">
+      <span id="welcome-message" class="nav-link">Welcome, {{ user.email }}!</span>
+       <a class="nav-link" ng-click="logout()">Logout</a>
+    </div>
+  </div>
+</div>

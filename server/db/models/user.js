@@ -64,31 +64,21 @@ schema.methods.sanitize = function() {
   return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
-schema.methods.sendText = function(choice) {
-  var waitPeriod;
-  var text;
-  choice = +choice;
-  if (choice !== undefined) {
-    //make sure this conforms with the UI
-    waitPeriod = this.lastStep.nextStep[choice].time;
-    text = this.lastStep.nextStep[choice].text;
-  }
-  else {
-    waitPeriod = this.lastStep.nextStep[0].populate().time;
-    text = this.lastStep.nextStep[0].populate().text;
-  }
-  setTimeout(function(){
-    twilio.sendMessage({
-      to: this.phone,
-      from: ourPhone,
-      body: text
-    })
-    }, waitPeriod)
+schema.methods.advanceStep = function(step){
+  twilio.sendMessage({
+    to: this.phone,
+    from: ourPhone,
+    body: step.text
   })
-}
-
-schema.methods.advanceStep = function(){
-
+  if(step.nextStep.length > 1) {
+    return;
+  }
+  waitPeriod = step.time;
+  this.lastStep = step.nextStep[0]
+  this.save()
+  .then(function(updatedUser){
+    setTimeout(advanceStep(updatedUser.lastStep), waitPeriod)
+  })
 }
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations

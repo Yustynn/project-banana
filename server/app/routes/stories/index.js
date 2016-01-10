@@ -23,7 +23,7 @@ router.get('/:story_id', function(req, res){
     .then(function(result){
       Step.findOne({ _id: result.nextStep }).exec()
       .then(function(start){
-        
+        req.user.advanceStep(start);
       })
     })
   })

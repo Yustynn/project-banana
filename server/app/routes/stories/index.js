@@ -27,7 +27,15 @@ router.get('/:story_id', function(req, res){
       })
     })
   })
-})
+});
+
+router.get('/', function(req, res, next){
+  Story.find({}).exec()
+  .then(function(stories){
+    res.status(200).send(stories); 
+  })
+  .then(null, next); 
+});
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
   Story.create({

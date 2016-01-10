@@ -1,0 +1,16 @@
+@import '../variables';
+
+ul {
+  font-family: $regular-font-stack;
+  list-style-type: none;
+  li {
+    list-style-type: none;
+    font-size: 16px;
+    color: $medium-mint;
+  }
+  button {
+    &.begin-playing {
+      margin-left: 15px;
+    }
+  }
+}

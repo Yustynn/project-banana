@@ -9,27 +9,30 @@ app.config(function($stateProvider) {
 });
 
 app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, StoryFactory) {
-  
-  $scope.bigMessage = ["Begin your story below…", "What happens next?"];
 
-  $scope.pathOptions = [{value: true,
-                          text: 'yes'},
-                          {value: false,
-                          text: 'no'}];
+  if ($rootScope.isFirstStep) {
+    $scope.bigMessage = "Begin your story below…";
+  } else {
+    $scope.bigMessage = "What happens next?";
+  }
+
+  // pathChoice: Whether or not we're branching from this step
   $scope.pathChoice = false;
-  $scope.timeDelay = 0;
-  $scope.stepToWorkOnNext = 'none';
 
+  // timeDelay: How long to delay this step's delivery
+  $scope.timeDelay = 0;
+  
   $scope.createNewStep = function() {
-    if ($scope.optionOne && $scope.optionTwo){
+    if ($scope.optionOne && $scope.optionTwo) {
       $scope.content += ' ' + $scope.optionOne.toUpperCase() + ' or ' + $scope.optionTwo.toUpperCase();
     }
 
     // Params are.. text, prevStep, storyId, time, choice
-    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, parseInt($scope.timeDelay), $scope.stepToWorkOnNext)
+    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, parseInt($scope.timeDelay))
       .then(function(responseData) {
-        console.log(responseData, "RESPONSE DATA")
+        console.log(responseData, "RESPONSE DATA");
         $rootScope.isFirstStep = false;
+
         $state.go('step', {
           stepId: responseData.stepId,
           storyId: responseData.storyId
@@ -38,5 +41,4 @@ app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, St
         console.error(err);
       })
   }
-
 });

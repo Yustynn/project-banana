@@ -26,4 +26,10 @@
   }
 }
 
+.box.box-clickable {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 

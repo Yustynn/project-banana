@@ -20,27 +20,53 @@ body {
   margin: 0 auto;
 }
 
+
 /* Clearfix */
 
 .clearfix:after {
-     visibility: hidden;
-     display: block;
-     font-size: 0;
-     content: " ";
-     clear: both;
-     height: 0;
-     }
-.clearfix { display: inline-block; }
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.clearfix {
+  display: inline-block;
+}
+
+
 /* start commented backslash hack \*/
-* html .clearfix { height: 1%; }
-.clearfix { display: block; }
+
+* html .clearfix {
+  height: 1%;
+}
+
+.clearfix {
+  display: block;
+}
+
+
 /* close commented backslash hack */
 
+
+/* Text styles */
+
+p,
+span {
+  font-family: $regular-font-stack;
+}
 
 
 /* Header Styles */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: $header-font-stack;
   margin-top: 0px;
   margin-bottom: 5px;
@@ -81,6 +107,18 @@ button {
   }
 }
 
+button[disabled] {
+  background: darken($dark-background-teal, 2%);
+  color: lighten($dark-background-teal, 2%);
+}
+
+.blank {
+  button[disabled] {
+    background: darken($almost-white-mint, 8%);
+    color: lighten($almost-white-mint, 2%);
+  }
+}
+
 line {
   height: 70px;
   width: 0px;
@@ -98,6 +136,9 @@ line {
     color: $medium-mint;
     margin-bottom: 5px;
     font-size: 14px;
+    .required {
+      font-weight: 700;
+    }
   }
   input,
   textarea {

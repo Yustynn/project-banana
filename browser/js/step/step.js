@@ -23,8 +23,8 @@ app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, St
     if ($scope.optionOne && $scope.optionTwo){
       $scope.content += ' ' + $scope.optionOne.toUpperCase() + ' or ' + $scope.optionTwo.toUpperCase();
     }
-    // Params are.. text, prevStep, storyId, time
-    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, $scope.timeInMinutes)
+    // Params are.. text, prevStep, storyId, time, choice
+    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, $scope.timeInMinutes, $scope.stepToWorkOnNext)
       .then(function(responseData) {
         $rootScope.isFirstStep = false;
         $state.go('step', {

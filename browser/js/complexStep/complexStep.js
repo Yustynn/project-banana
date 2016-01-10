@@ -1,27 +1,29 @@
 app.config(function($stateProvider) {
 
-  $stateProvider.state('simpleStep', {
+  $stateProvider.state('complexStep', {
     url: '/stories/:storyId/steps/:stepId',
-    templateUrl: 'js/simpleStep/simple-step.html',
-    controller: 'SimpleStepCtrl'
+    templateUrl: 'js/complexStep/complex-step.html',
+    controller: 'ComplexStepCtrl'
   });
 
 });
 
-app.controller('SimpleStepCtrl', function($scope, $rootScope, $state, $stateParams, StoryFactory) {
-  console.log("We are in the simpleStep");
+app.controller('ComplexStepCtrl', function($scope, $rootScope, $state, $stateParams, StoryFactory) {
+  console.log("We are in the complexStep");
+
   $scope.timeInMinutes = 0;
 
   $scope.$watch('pathChoice', function(newValue, oldValue) {
     console.log("NEWVALUE", newValue);
     console.log("OLDVALUE", oldValue);
     console.log("----");
-      if (newValue === true){
-        $state.go('complexStep',  {
-            stepId: $stateParams.stepId,
-            storyId: $stateParams.storyId
-          })
-      }
+    
+    if (newValue === false) {
+      $state.go('simpleStep', {
+        stepId: $stateParams.stepId,
+        storyId: $stateParams.storyId
+      })
+    }
   });
 
   $scope.createNewStep = function() {
@@ -29,7 +31,7 @@ app.controller('SimpleStepCtrl', function($scope, $rootScope, $state, $statePara
     StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, $scope.timeInMinutes)
       .then(function(responseData) {
         $rootScope.isFirstStep = false;
-        $state.go('simpleStep', {
+        $state.go('complexStep', {
           stepId: responseData.stepId,
           storyId: responseData.storyId
         });

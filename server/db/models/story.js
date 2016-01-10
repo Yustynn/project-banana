@@ -26,15 +26,10 @@ var storySchema = new mongoose.Schema({
 })
 
 storySchema.methods.createHeadStep = function(text) {
-  var story = this;
-
   return Step.create({
     text: text || 'DEFAULT_HEADER',
     prevStep: null,
     story: this._id
-  }).then(step => {
-    story.startStep = this._id;
-    return story.save()
   })
 }
 
@@ -45,4 +40,4 @@ storySchema.methods.createStep = function(stepData) {
 
 var Story = mongoose.model('Story', storySchema);
 
-module.exports = Story;
+module.exports = Story; 

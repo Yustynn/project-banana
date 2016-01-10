@@ -12,6 +12,7 @@ app.controller('HomeCtrl', function($scope, $state, StoryFactory, $rootScope) {
     StoryFactory.createNewStory($scope.title)
       .then(function(responseData) {
         $rootScope.isFirstStep = true;
+        $rootScope.storyTitle = $scope.title;
         $state.go('simpleStep', {
           stepId: responseData.stepId,
           storyId: responseData.storyId

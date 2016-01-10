@@ -41,7 +41,8 @@ router.get('/', function(req, res, next){
 router.post('/create', ensureAuthenticated, function(req, res, next) {
   Story.create({
     storyAuthor: req.user._id, 
-    storyName: req.body.storyName
+    storyName: req.body.storyName,
+    description: req.body.description
   })
   .then(function(newStory){
     return newStory.createHeadStep()

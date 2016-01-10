@@ -29,7 +29,7 @@ var schema = new mongoose.Schema({
     id: String
   },
   phone: {
-    type: Number,
+    type: String,
     required: true, 
     unique: true
   },
@@ -64,6 +64,23 @@ schema.methods.sanitize = function() {
   return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
+schema.methods.advanceStep = function(step){
+  twilio.sendMessage({
+    to: this.phone,
+    from: ourPhone,
+    body: step.text
+  })
+  if(step.nextStep.length > 1) {
+    return;
+  }
+  waitPeriod = step.time;
+  this.lastStep = step.nextStep[0]
+  this.save()
+  .then(function(updatedUser){
+    setTimeout(advanceStep(updatedUser.lastStep), waitPeriod)
+  })
+}
+
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
 var generateSalt = function() {
@@ -96,10 +113,10 @@ schema.method('correctPassword', function(candidatePassword) {
   return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-schema.method.createStory = function(storyData) {
+schema.methods.createStory = function(storyData) {
   storyData.storyAuthor = this._id;
   return Story.create(storyData);
 }
 
 var User = mongoose.model('User', schema);
-module.exports = User; 
+module.exports = User;

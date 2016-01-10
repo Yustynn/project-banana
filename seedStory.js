@@ -30,33 +30,43 @@ var storyArr = [
   }
 ];
 
-user.findOne({
+User.findOne({
     displayName: 'Barack'
   })
   .then(barack => {
-    return barack.createStory({
+    return barack.createStory({ // do you need to return?
       storyName: 'Sunny Day'
     })
   })
   .then(story => {
-    seedStory(story, storyArr)
+    return seedStory(story, storyArr)
   })
   .then(() => console.log('DATABASE SEEDED! :)'))
 
 function seedStory(story, storyArr) {
 
+  // create step, update prev step to ref new step
+  function createStep(text, prevStepId) {
+    console.log(text);
+    return story.createStep({
+        text: text,
+        prevStep: prevStepId
+      })
+      .then(step => step.linkFromPrev);
+  }
+
   // recursively walks through given array, creating promise chain for seed
   function seedHelper(arr, promForPrevStep) {
     if (!arr.length) return promForPrevStep;
-
     var el = arr[0];
+
     // if el is string, append to promise chain
     if (typeof el === 'string') {
+
       return promForPrevStep
         .then(prevStep => {
-          var stepData = createStepData(el, prevStep._id);
-          promForNewStep = story.createStep(stepData);
-          return seed(arr.slice(1), promForNewStep);
+          promForNewStep = createStep(el, prevStep._id);
+          return seedHelper(arr.slice(1), promForNewStep);
         })
     }
     // if el is string, append Promise.all for both left and right paths to promise chain
@@ -66,27 +76,19 @@ function seedStory(story, storyArr) {
           var leftArr = el.left,
             rightArr = el.right;
 
-          var promForLeftStep = createStep(leftArr.unshift(), prevStep._id),
-            promForRightStep = createStep(rightArr.unshift(), prevStep._id);
+          var promForLeftStep = createStep(leftArr[0], prevStep._id),
+            promForRightStep = createStep(rightArr[0], prevStep._id);
 
-          var promForLeftPath = seedHelper(leftArr.left, promForLeftStep),
-            promForRightPath = seedHelper(rightArr.right, promForRightStep);
+          var promForLeftPath = seedHelper(leftArr.slice(1), promForLeftStep),
+            promForRightPath = seedHelper(rightArr.slice(1), promForRightStep);
 
           return Promise.all(promForLeftPath, promiseForRightPath)
         })
     }
   }
 
-  function createStep(text, prevStepId) {
-    return story.createStep({
-        text: text,
-        prevStep: prevStepId
-      })
-      .then(step => step.linkFromPrev);
-  }
+  // start actual seedStory function code
+  var promiseForHeadStep = story.createHeadStep(storyArr[0]);
 
-  storyArr = storyArr.slice(0); // Just to keep things functional / no side effects
-  var promiseForHeadStep = story.createHeadStep(storyArr.unshift());
-
-  return seedHelper(storyArr, promiseForHeadStep)
+  return seedHelper(storyArr.slice(1), promiseForHeadStep)
 }

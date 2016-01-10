@@ -34,14 +34,18 @@ User.findOne({
     displayName: 'Barack'
   })
   .then(barack => {
-    return barack.createStory({ // do you need to return?
+    console.log('Barack is in the house.');
+    return barack.createStory({
       storyName: 'Sunny Day'
     })
   })
   .then(story => {
+    console.log('Started his life story');
     return seedStory(story, storyArr)
   })
-  .then(() => console.log('DATABASE SEEDED! :)'))
+  .then((lastStep) => {
+    console.log('DATABASE SEEDED! :)')
+  })
 
 function seedStory(story, storyArr) {
 
@@ -82,7 +86,7 @@ function seedStory(story, storyArr) {
           var promForLeftPath = seedHelper(leftArr.slice(1), promForLeftStep),
             promForRightPath = seedHelper(rightArr.slice(1), promForRightStep);
 
-          return Promise.all(promForLeftPath, promiseForRightPath)
+          return Promise.all([promForLeftPath, promiseForRightPath])
         })
     }
   }

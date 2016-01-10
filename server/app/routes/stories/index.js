@@ -15,6 +15,7 @@ var ensureAuthenticated = function (req, res, next) {
 };
 
 router.get('/:story_id', function(req, res){
+  console.log(req.params.story_id);
   Story.findOne({ _id: req.params.story_id }).exec()
   .then(function(result){
     Step.findOne({ _id: result.startStep }).exec()

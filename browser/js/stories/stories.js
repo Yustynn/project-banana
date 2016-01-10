@@ -22,7 +22,7 @@ app.controller('AllStoriesCtrl', function($scope, $rootScope, allStories, StoryF
 
   $scope.beginPlayingStory = function(id){
     StoryFactory.beginStory(id)
-      .then(function(id) {
+      .then(function(responseData) {
         console.log("Story has begun!");
         $scope.storyHasBegun = true;
       }).then(null, function(err) {

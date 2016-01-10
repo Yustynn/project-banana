@@ -13,7 +13,7 @@ app.factory('StoryFactory', function($http) {
     },
     goToPrevStep: function(storyId, stepId) {
       return $http.get('api/steps/:stepId')
-        .then(extractData)
+        .then(extractData);
     },
     getAllStories: function() {
       return $http.get('/api/stories')

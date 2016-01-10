@@ -19,6 +19,10 @@ app.factory('StoryFactory', function($http) {
       return $http.get('/api/stories')
         .then(extractData);
     }, 
+    beginStory: function(id) {
+      return $http.get('/api/stories/' + id)
+        .then(extractData);
+    },
     getIncompletePaths: function() {
       // Then, do a backend request for that ID so that we can get the 
           // prevID & choice properties on that step

@@ -3,7 +3,7 @@
     <div class="box blank start-xs">
       <h2 class="big-message">All stories available to play</h2>
       <ul>
-        <li ng-repeat="story in allStories">{{ story.storyName }}<button class="begin-playing" ng-click="beginPlayingStory()">Start playing this story</button></li>
+        <li ng-repeat="story in allStories">{{ story.storyName }}<button class="begin-playing" ng-click="beginPlayingStory(story._id)">Start playing this story</button></li>
       </ul>
     </div>
   </div>

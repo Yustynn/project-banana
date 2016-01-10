@@ -20,4 +20,14 @@ app.controller('AllStoriesCtrl', function($scope, $rootScope, allStories, StoryF
 
   $scope.allStories = allStories;
 
+  $scope.beginPlayingStory = function(id){
+    StoryFactory.beginStory(id)
+      .then(function(id) {
+        console.log("Story has begun!");
+        $scope.storyHasBegun = true;
+      }).then(null, function(err) {
+        console.error(err);
+      });
+  };
+
 });

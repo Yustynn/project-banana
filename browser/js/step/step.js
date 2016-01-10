@@ -24,8 +24,9 @@ app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, St
       $scope.content += ' ' + $scope.optionOne.toUpperCase() + ' or ' + $scope.optionTwo.toUpperCase();
     }
     // Params are.. text, prevStep, storyId, time
-    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, $scope.timeInMinutes)
+    StoryFactory.createNewStep($scope.content, $stateParams.stepId, $stateParams.storyId, $scope.timeInMinutes, parseInt($scope.timeDelay))
       .then(function(responseData) {
+        console.log(responseData, "RESPONSE DATA")
         $rootScope.isFirstStep = false;
         $state.go('step', {
           stepId: responseData.stepId,

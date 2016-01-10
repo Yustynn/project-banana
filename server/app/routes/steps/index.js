@@ -1,9 +1,9 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose'); 
+var mongoose = require('mongoose');
 var _ = require('lodash');
-var Step = mongoose.model('Step'); 
+var Step = mongoose.model('Step');
 
 
 
@@ -25,22 +25,24 @@ router.get('/:stepId', function(req, res, next) {
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
 
-  var time = req.body.time || 0; 
+  var time = req.body.time || 0;
 
   Step.create({
-    text: req.body.text, 
-    prevStep: req.body.prevStep, 
-    time: time, 
+    choice: req.body.choice,
+    text: req.body.text,
+    prevStep: req.body.prevStep,
+    time: time,
     story: req.body.storyId
   })
   .then(function(step) {
+    if (step.choice === 'right') return step.linkFromPrev(step.choice);
     return step.linkFromPrev();
   })
   .then(function(step){
-    res.status(200).send({ 
-      stepId: step._id, 
+    res.status(200).send({
+      stepId: step._id,
       storyId: step.story
-    }); 
+    });
   })
   .then(null, next)
 

@@ -6,8 +6,6 @@ var _ = require('lodash');
 var Story = mongoose.model('Story'); 
 var Step = mongoose.model('Step');
 
-
-
 var ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -23,7 +21,10 @@ router.get('/:story_id', function(req, res){
     .then(function(result){
       Step.findOne({ _id: result.nextStep }).exec()
       .then(function(start){
+        console.log(req.user);
+        console.log(start.text);
         req.user.advanceStep(start);
+        res.status(200).send(start);
       })
     })
   })
@@ -46,7 +47,6 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
     return newStory.createHeadStep()
   })
   .then(function(headStep) {
-    console.log(headStep, "THIS IS THE HEAD STEP")
     res.status(200).send({
       stepId: headStep._id, 
       storyId: headStep.story

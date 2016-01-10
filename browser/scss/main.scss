@@ -85,13 +85,23 @@ line {
   border-left: 3px dotted $almost-white-mint;
   background: none;
   width: 0;
-  .short-line {
+  &.short-line {
     height: 200px;
   }
-  .long-line {
-    height: 600px;
+  &.long-line {
+    min-height: 200px;
+    
   }
 }
+
+.long-line {
+  min-height: 150px;
+  border-left: 3px dotted $almost-white-mint;
+  max-width: 20px;
+  margin:auto;
+  margin-top:-80px
+}
+
 
 
 /* Button styles */
@@ -126,7 +136,7 @@ button[disabled] {
 }
 
 line {
-  height: 70px;
+  height: 200px;
   width: 0px;
   border: 2px dashed $almost-white-mint;
 }

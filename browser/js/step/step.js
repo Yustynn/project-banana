@@ -19,6 +19,16 @@ app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, St
   // pathChoice: Whether or not we're branching from this step
   $scope.pathChoice = false;
 
+
+  $scope.goToPreviousStep = function(){
+    StoryFactory.goToPrevStep($stateParams.storyId, $stateParams.stepId)
+    .then(function(data){
+      $state.go('step', {
+        stepId: data.stepId,
+        storyId: data.storyId
+      });
+    })
+  }
   // timeDelay: How long to delay this step's delivery
   $scope.timeDelay = 0;
   

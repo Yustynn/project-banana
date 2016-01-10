@@ -10,7 +10,11 @@ app.factory('StoryFactory', function($http) {
     createNewStep: function(text, prevStep, storyId, time) {
       return $http.post('/api/steps/create', {text: text, prevStep: prevStep, storyId: storyId, time: time})
         .then(extractData);
-    }, 
+    },
+    goToPrevStep: function(storyId, stepId) {
+      return $http.get('api/steps/:stepId')
+        .then(extractData)
+    },
     getAllStories: function() {
       return $http.get('/api/stories')
         .then(extractData);

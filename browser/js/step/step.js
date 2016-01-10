@@ -18,6 +18,7 @@ app.controller('StepCtrl', function($scope, $rootScope, $state, $stateParams, St
                           text: 'no'}];
   $scope.pathChoice = false;
   $scope.timeDelay = 0;
+  $scope.stepToWorkOnNext = 'none';
 
   $scope.createNewStep = function() {
     if ($scope.optionOne && $scope.optionTwo){

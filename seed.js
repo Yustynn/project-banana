@@ -27,19 +27,19 @@ var Story = mongoose.model('Story');
 var Step = mongoose.model('Step');
 
 
-var obamaId; 
-var storyId; 
-var forkStep; 
+var obamaId;
+var storyId;
+var forkStep;
 
 var seedUsers = function() {
 
   var users = [{
     email: 'michelle@gmail.com',
-    password: 'flotus', 
+    password: 'flotus',
     displayName: 'Michelle'
   }, {
     email: 'obama@gmail.com',
-    password: 'potus', 
+    password: 'potus',
     displayName: 'Barack'
   }];
 
@@ -49,16 +49,16 @@ var seedUsers = function() {
 
 var seedStories = function() {
   var stories = {
-    storyName: 'Sunny Day',
-    storyAuthor: obamaId  
+    storyName: 'Matt"s Day in the Sun',
+    storyAuthor: obamaId
   }
 
-  return Story.create(stories); 
+  return Story.create(stories);
 }
 
 var seedSteps = function() {
   var steps = [{
-    text: 'HEAD', 
+    text: 'HEAD',
     story: ''
   }]
 }
@@ -70,7 +70,7 @@ var seedSteps = function() {
 //   .then(function(){
 //     return User.findOne({displayName: "Barack"}).exec()
 //   }).then(function(barackUser) {
-//     obamaId = barackUser._id; 
+//     obamaId = barackUser._id;
 //   }).then(function(){
 //     return seedStories()
 //   }).then(function(){
@@ -78,7 +78,7 @@ var seedSteps = function() {
 //   }).then(function(story){
 //     return story.createHeadStep(story._id)
 //     .then(function(headStep){
-//       return story.startStep = headStep._id; 
+//       return story.startStep = headStep._id;
 //     })
 //   }).then(function(startStepId) {
 //     return Step.findOne({_id: startStepId}).exec()
@@ -96,25 +96,25 @@ var seedSteps = function() {
 
   User.findOne({displayName: "Barack"}).exec()
   .then(function(barackUser) {
-    console.log('FOUND BARACK'); 
-    obamaId = barackUser._id; 
+    console.log('FOUND BARACK');
+    obamaId = barackUser._id;
   }).then(function(){
     return seedStories()
   }).then(function(){
     return Story.findOne({storyName: "Sunny Day"})
   }).then(function(story){
-    storyId = story._id; 
+    storyId = story._id;
     return story.createHeadStep(story._id)
     .then(function(headStep){
-      story.startStep = headStep._id; 
-      return headStep; 
+      story.startStep = headStep._id;
+      return headStep;
     })
   }).then(function(startStep){
     return Step.create({
-        text:   "It’s a sunny day. Life is pretty.", 
-        prevStep: startStep._id, 
-        time: 0, 
-        story: storyId, 
+        text:   "It’s a sunny day. Life is pretty.",
+        prevStep: startStep._id,
+        time: 30000,
+        story: storyId,
         choice: 'none'
       }).then(function(step){
         return step.linkFromPrev()
@@ -123,10 +123,10 @@ var seedSteps = function() {
 
   }).then(function(prevStep){
     return Step.create({
-        text: "Oh no, Microsoft Excel keeps crashing!", 
-        prevStep: prevStep, 
-        time: 0, 
-        story: storyId, 
+        text: "Oh no, Microsoft Excel keeps crashing!",
+        prevStep: prevStep,
+        time: 30000,
+        story: storyId,
         choice: 'none'
       }).then(function(step){
         return step.linkFromPrev()
@@ -134,20 +134,20 @@ var seedSteps = function() {
   }).then(function(prevStep){
     return Step.create({
         text: "My boss is gonna kill me if I don’t get this spreadsheet done!",
-        prevStep: prevStep, 
-        time: 0, 
-        story: storyId, 
+        prevStep: prevStep,
+        time: 30000,
+        story: storyId,
         choice: 'none'
       }).then(function(step){
         return step.linkFromPrev()
       })
   }).then(function(prevStep){
-    forkStep = prevStep; 
+    forkStep = prevStep;
     return Step.create({
         text: "You’re a genius! That totally worked!",
-        prevStep: prevStep, 
-        time: 0, 
-        story: storyId, 
+        prevStep: prevStep,
+        time: 30000,
+        story: storyId,
         choice: 'left'
       }).then(function(step){
         return step.linkFromPrev()
@@ -155,9 +155,9 @@ var seedSteps = function() {
   }).then(function(prevStep){
     return Step.create({
         text: "Life is pretty again.",
-        prevStep: prevStep, 
-        time: 0, 
-        story: storyId, 
+        prevStep: prevStep,
+        time: 30000,
+        story: storyId,
         choice: 'none'
       }).then(function(step){
         return step.linkFromPrev()
@@ -165,9 +165,9 @@ var seedSteps = function() {
   }).then(function(){
     return Step.create({
         text: "But it’s hard out there for ex-cons.",
-        prevStep: forkStep, 
-        time: 0, 
-        story: storyId, 
+        prevStep: forkStep,
+        time: 30000,
+        story: storyId,
         choice: 'right'
       }).then(function(step){
         return step.linkFromPrev(true)
@@ -175,9 +175,9 @@ var seedSteps = function() {
   }).then(function(prevStep){
     return Step.create({
         text: "I love my job.",
-        prevStep: prevStep, 
-        time: 0, 
-        story: storyId, 
+        prevStep: prevStep,
+        time: 30000,
+        story: storyId,
         choice: 'none'
       }).then(function(step){
         return step.linkFromPrev()

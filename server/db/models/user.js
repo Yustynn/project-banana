@@ -67,39 +67,40 @@ schema.methods.sanitize = function() {
 };
 
 schema.methods.advanceStep = function(step){
+  console.log(Date.now())
   var waitPeriod;
-  var self;
+  var self = this;
   console.log("sending " + step.text);
   twilio.sendMessage({
     to: this.phone,
     from: ourPhone,
     body: step.text
-  })
-  this.lastStep = step.nextStep[0]
-  self = this;
+  }, function(response){
+    self.lastStep = step.nextStep[0]
+    console.log(step.nextStep.length);
 
-  console.log(step.nextStep.length);
+    if(step.nextStep.length > 1) {
+      this.save();
+    }
 
-  // if(step.nextStep.length > 1) {
-  //   return this.save()
-  // }
-
-  waitPeriod = step.time;
-  this.save()
-  .then(function(updatedUser){
-    console.log(".saved!")
-    Step.findOne({ _id: updatedUser.lastStep }).exec()
-    .then(function(step){
-      console.log(step.text);
-      console.log("should be sent in " + waitPeriod + " ms")
-      setTimeout(self.advanceStep(step), waitPeriod)
+    console.log(step);
+    waitPeriod = step.time;
+    self.save()
+    .then(function(updatedUser){
+      console.log(".saved!")
+      Step.findOne({ _id: updatedUser.lastStep }).exec()
+      .then(function(step){
+        console.log(step.text);
+        console.log("should be sent in " + waitPeriod + " ms", Date.now())
+        setTimeout(function(){self.advanceStep(step)}, waitPeriod)
+      })
     })
   })
 }
 
-schema.methods.handleText = function(input){
-
-}
+// schema.methods.handleText = function(input){
+  //I don't know what that is.
+// }
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

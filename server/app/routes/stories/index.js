@@ -1,9 +1,9 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var mongoose = require('mongoose'); 
+var mongoose = require('mongoose');
 var _ = require('lodash');
-var Story = mongoose.model('Story'); 
+var Story = mongoose.model('Story');
 var Step = mongoose.model('Step');
 
 var ensureAuthenticated = function (req, res, next) {
@@ -18,10 +18,16 @@ router.get('/:story_id', function(req, res){
   console.log(req.params.story_id);
   Story.findOne({ _id: req.params.story_id }).exec()
   .then(function(result){
+    console.log("story found:")
+    console.log(result);
     Step.findOne({ _id: result.startStep }).exec()
     .then(function(result){
+      console.log("first step found:")
+      console.log(result);
       Step.findOne({ _id: result.nextStep }).exec()
       .then(function(start){
+        console.log("next step found:")
+        console.log(result);
         console.log(req.user);
         console.log(start.text);
         req.user.advanceStep(start);
@@ -34,14 +40,14 @@ router.get('/:story_id', function(req, res){
 router.get('/', function(req, res, next){
   Story.find({}).exec()
   .then(function(stories){
-    res.status(200).send(stories); 
+    res.status(200).send(stories);
   })
-  .then(null, next); 
+  .then(null, next);
 });
 
 router.post('/create', ensureAuthenticated, function(req, res, next) {
   Story.create({
-    storyAuthor: req.user._id, 
+    storyAuthor: req.user._id,
     storyName: req.body.storyName,
     description: req.body.description
   })
@@ -50,10 +56,10 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
   })
   .then(function(headStep) {
     res.status(200).send({
-      stepId: headStep._id, 
+      stepId: headStep._id,
       storyId: headStep.story
-    }) 
+    })
   })
-  .then(null, next); 
+  .then(null, next);
 
 })
